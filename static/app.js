@@ -23,3 +23,9 @@ document.querySelectorAll('[data-count]').forEach(el=>counterObserver.observe(el
 $('.menu-toggle').addEventListener('click',()=>{const open=$('.nav-links').classList.toggle('open');$('.menu-toggle').setAttribute('aria-expanded',String(open))});
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>$('.nav-links').classList.remove('open')));
 let ticking=false;addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progressBar').style.width=`${max>0?scrollY/max*100:0}%`;const hero=$('.hero-art');if(hero){const rect=hero.getBoundingClientRect();hero.style.setProperty('--scroll-shift',`${Math.max(-16,Math.min(16,(rect.top-innerHeight*.2)*-.035))}px`)}ticking=false})},{passive:true});
+
+const rotatingWords=['lasting impact','better systems','useful insight'];
+const dynamicWord=$('#dynamicWord');let wordIndex=0;
+if(dynamicWord&&!reduceMotion){setInterval(()=>{dynamicWord.classList.add('word-out');setTimeout(()=>{wordIndex=(wordIndex+1)%rotatingWords.length;dynamicWord.textContent=rotatingWords[wordIndex];dynamicWord.classList.remove('word-out');dynamicWord.classList.add('word-in');setTimeout(()=>dynamicWord.classList.remove('word-in'),550)},260)},3400)}
+const marqueeItems=['Python','Backend systems','FastAPI','Cloud','Data insight','REST APIs','SQL','Team delivery'];
+$('#marqueeTrack').innerHTML=[...marqueeItems,...marqueeItems].map((item,i)=>`<span class="marquee-item" ${i>=marqueeItems.length?'aria-hidden="true"':''}><i></i>${item}</span>`).join('');
